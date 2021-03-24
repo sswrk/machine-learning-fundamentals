@@ -19,7 +19,7 @@ def task1_results():
     results = {}
     for dimension in range(2, 11):
         dimension_results = []
-        for try_number in range(0, 10):
+        for try_number in range(0, 25):
             points_to_generate = 10000
             points = random_points(points_to_generate, dimension)
             points_in_sphere = 0
@@ -37,19 +37,22 @@ def task1_plot(results):
     y_error = []
     for element in x:
         y.append(np.average(results[element]))
-        y_error.append((max(results[element]) - np.average(results[element]),
-                        np.average(results[element]) - min(results[element])))
+        y_error.append((np.std(results[element]),
+                        np.std(results[element])))
 
-    plt.errorbar(x, y, yerr=np.array(y_error).T)
+    print(y_error)
+    plt.errorbar(x, y, yerr=np.array(y_error).T, fmt='.', markersize=4, capsize=5)
+    plt.xlabel("Wymiary")
+    plt.ylabel("Punkty wewnątrz hiperkuli")
     plt.show()
 
 
 def task2_results():
     results = {}
-    for dimension in range(2, 11):
+    for dimension in range(2, 15):
         dimension_results = []
-        for try_number in range(0, 10):
-            points_to_generate = 100
+        for try_number in range(0, 25):
+            points_to_generate = 500
             points = random_points(points_to_generate, dimension)
             distances = []
             for point in points:
@@ -65,15 +68,17 @@ def task2_results():
 
 
 def task2_plot(results):
-    x = list(range(2, 11))
+    x = list(range(2, 15))
     y = []
     y_error = []
     for element in x:
         y.append(np.average(results[element]))
-        y_error.append((max(results[element]) - np.average(results[element]),
-                        np.average(results[element]) - min(results[element])))
+        y_error.append((np.std(results[element]),
+                        np.std(results[element])))
 
-    plt.errorbar(x, y, yerr=np.array(y_error).T, fmt='o')
+    plt.errorbar(x, y, yerr=np.array(y_error).T, fmt='.', markersize=4, capsize=5)
+    plt.xlabel("Wymiary")
+    plt.ylabel("Średnia odległość między punktami")
     plt.show()
 
 
@@ -94,10 +99,12 @@ def task3_plot(results):
     for i in range(2, 11):
         plt.plot(results[i], '.')
         plt.gca().set_ylim([0, 360])
+        plt.xlabel("Numer pary")
+        plt.ylabel("Kąt między wektorami")
         plt.show()
 
 
 if __name__ == '__main__':
-    task1_plot(task1_results())
-    task2_plot(task2_results())
+    # task1_plot(task1_results())
+    # task2_plot(task2_results())
     task3_plot(task3_results())
